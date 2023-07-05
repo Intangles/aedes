@@ -12,6 +12,7 @@ const memory = require('aedes-persistence')
 const mqemitter = require('mqemitter')
 const Client = require('./lib/client')
 const { $SYS_PREFIX, bulk } = require('./lib/utils')
+const EXCLUDED_CLIENT_IDS = ['352914090440401', '352914090567286', '352914090572948', '352914090459252']
 
 module.exports = Aedes.createBroker = Aedes
 
@@ -191,7 +192,10 @@ function storeRetained (packet, done) {
 
 function emitPacket (packet, done) {
   if (this.client) packet.clientId = this.client.id
-  this.broker.mq.emit(packet, done)
+  if (!EXCLUDED_CLIENT_IDS.includes(this.client.id)) {
+    this.broker.mq.emit(packet, done)
+  }
+  done()
 }
 
 function enqueueOffline (packet, done) {
