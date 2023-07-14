@@ -12,7 +12,6 @@ const memory = require('aedes-persistence')
 const mqemitter = require('mqemitter')
 const Client = require('./lib/client')
 const { $SYS_PREFIX, bulk } = require('./lib/utils')
-const EXCLUDED_CLIENT_IDS = ['352914090440401', '352914090567286', '352914090572948', '352914090459252', '861551049778590', '864180069612039']
 
 module.exports = Aedes.createBroker = Aedes
 
