@@ -193,7 +193,7 @@ function storeRetained (packet, done) {
 function emitPacket (packet, done) {
   if (this.client) {
     packet.clientId = this.client.id
-    if (!EXCLUDED_CLIENT_IDS.includes(this.client.id)) {
+    if (!/^[0-9]{15}$/.test(this.client.id)) {
       this.broker.mq.emit(packet, done)
     }
   } else {
