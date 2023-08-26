@@ -196,7 +196,12 @@ function emitPacket (packet, done) {
       this.broker.mq.emit(packet, done)
     }
   } else {
-    this.broker.mq.emit(packet, done)
+    if (
+        !/^\$SYS\/.*\/new\/subscribes$/gm.test(packet.topic) && 
+        !/^\$SYS\/.*\/new\/clients$/gm.test(packet.topic) && 
+        !/^\$SYS\/.*\/disconnect\/clients$/gm.test(packet.topic)
+      )
+      this.broker.mq.emit(packet, done)
   }
   done()
 }
