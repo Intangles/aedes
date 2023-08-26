@@ -199,7 +199,8 @@ function emitPacket (packet, done) {
     if (
         !/^\$SYS\/.*\/new\/subscribes$/gm.test(packet.topic) && 
         !/^\$SYS\/.*\/new\/clients$/gm.test(packet.topic) && 
-        !/^\$SYS\/.*\/disconnect\/clients$/gm.test(packet.topic)
+        !/^\$SYS\/.*\/disconnect\/clients$/gm.test(packet.topic) &&
+        !/^\$SYS\/.*\/new\/unsubscribes$/gm.test(packet.topic)
       )
       this.broker.mq.emit(packet, done)
   }
