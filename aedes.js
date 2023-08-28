@@ -196,13 +196,18 @@ function emitPacket (packet, done) {
       this.broker.mq.emit(packet, done)
     }
   } else {
-    if (
+    if (process.env.SUPPRESS_MQTT_EVENTS === '1') {
+      if (
         !/^\$SYS\/.*\/new\/subscribes$/gm.test(packet.topic) && 
         !/^\$SYS\/.*\/new\/clients$/gm.test(packet.topic) && 
         !/^\$SYS\/.*\/disconnect\/clients$/gm.test(packet.topic) &&
         !/^\$SYS\/.*\/new\/unsubscribes$/gm.test(packet.topic)
-      )
+      ) {
+        this.broker.mq.emit(packet, done)
+      }
+    } else {
       this.broker.mq.emit(packet, done)
+    }
   }
   done()
 }
